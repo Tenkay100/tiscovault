@@ -1,0 +1,1297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FAB GOLD STORAGE • PRIVATE VAULT ACCESS</title>
+    <!-- Font Awesome 6 Pro -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Clash Display + Inter -->
+    <link href="https://api.fontshare.com/v2/css?f[]=clash-display@400,500,600,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #f97316;
+            --primary-dark: #ea580c;
+            --primary-glow: rgba(249, 115, 22, 0.25);
+            --bg-dark: #030405;
+            --bg-card: #0f1219;
+            --bg-card-light: #171c26;
+            --border: #2a2f3a;
+            --border-light: #363b48;
+            --text-primary: #ffffff;
+            --text-secondary: #9ca3af;
+            --text-tertiary: #6b7280;
+            --success: #10b981;
+            --gradient-1: linear-gradient(135deg, #f97316 0%, #ff8c33 100%);
+        }
+
+        body {
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+            position: relative;
+        }
+
+        /* Animated Grid Background */
+        .grid-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(249, 115, 22, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(249, 115, 22, 0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            z-index: -1;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        /* Noise Texture */
+        .noise {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMDAiIGhlaWdodD0iMzAwIj48ZmlsdGVyIGlkPSJmIj48ZmVUdXJidWxlbmNlIHR5cGU9ImZyYWN0YWxOb2lzZSIgYmFzZUZyZXF1ZW5jeT0iLjc0IiBudW1PY3RhdmVzPSIzIiAvPjwvZmlsdGVyPjxyZWN0IHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbHRlcj0idXJsKCNmKSIgb3BhY2l0eT0iMC4wNCIgLz48L3N2Zz4=');
+            opacity: 0.4;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-card);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--primary);
+            border-radius: 20px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 95%;
+            max-width: 1400px;
+            background: rgba(15, 18, 25, 0.85);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(249, 115, 22, 0.15);
+            border-radius: 100px;
+            padding: 16px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--gradient-1);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-icon::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            transform: rotate(45deg);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        .logo-icon i {
+            font-size: 24px;
+            color: var(--bg-dark);
+            z-index: 1;
+        }
+
+        .logo-text h1 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 22px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #fff 70%, var(--primary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .logo-text span {
+            font-size: 10px;
+            color: var(--text-tertiary);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-link {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 14px;
+            transition: 0.3s;
+            position: relative;
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: 0.3s;
+        }
+
+        .nav-link:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1.5px solid var(--primary);
+            color: var(--primary);
+            padding: 12px 32px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+            letter-spacing: 0.5px;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary);
+            color: var(--bg-dark);
+            box-shadow: 0 0 30px var(--primary-glow);
+        }
+
+        /* Hero Section - Confidential */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px 60px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            text-align: center;
+        }
+
+        .confidential-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background: rgba(249, 115, 22, 0.08);
+            border: 1px solid rgba(249, 115, 22, 0.2);
+            backdrop-filter: blur(10px);
+            padding: 10px 24px;
+            border-radius: 50px;
+            margin-bottom: 30px;
+        }
+
+        .confidential-badge i {
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .confidential-badge span {
+            color: var(--text-secondary);
+            font-size: 13px;
+            letter-spacing: 2px;
+            font-weight: 500;
+        }
+
+        .hero h1 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 72px;
+            font-weight: 700;
+            line-height: 1.1;
+            margin-bottom: 25px;
+            background: linear-gradient(135deg, #ffffff 0%, var(--primary) 80%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            color: var(--text-secondary);
+            font-size: 18px;
+            line-height: 1.8;
+            max-width: 600px;
+            margin: 0 auto 40px;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 60px;
+            justify-content: center;
+            margin-bottom: 50px;
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 5px;
+        }
+
+        .stat-item p {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            margin: 0;
+        }
+
+        .hero-btn {
+            background: var(--gradient-1);
+            border: none;
+            color: var(--bg-dark);
+            padding: 18px 54px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 15px 30px rgba(249, 115, 22, 0.3);
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 25px 40px rgba(249, 115, 22, 0.4);
+        }
+
+        /* Redacted/Classified Elements */
+        .redacted-bar {
+            width: 100%;
+            height: 40px;
+            background: linear-gradient(90deg, transparent, rgba(249,115,22,0.1), transparent);
+            margin: 40px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .redacted-bar::before {
+            content: '▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮▮';
+            position: absolute;
+            color: var(--primary);
+            opacity: 0.2;
+            font-size: 24px;
+            white-space: nowrap;
+            animation: slide 20s linear infinite;
+        }
+
+        @keyframes slide {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(100%); }
+        }
+
+        /* Features Section - Generic */
+        .features {
+            padding: 80px 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-header h2 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 42px;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .section-header h2 span {
+            color: var(--primary);
+            position: relative;
+        }
+
+        .section-header p {
+            color: var(--text-tertiary);
+            font-size: 16px;
+            max-width: 500px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 40px 30px;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(249,115,22,0.1);
+        }
+
+        .feature-icon {
+            width: 70px;
+            height: 70px;
+            background: rgba(249,115,22,0.1);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+        }
+
+        .feature-icon i {
+            font-size: 32px;
+            color: var(--primary);
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+        }
+
+        .feature-card p {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        /* Owner Profile - Professional */
+        .owner-section {
+            padding: 60px 40px 100px;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .owner-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 60px;
+            padding: 50px;
+            display: grid;
+            grid-template-columns: 0.8fr 1.2fr;
+            gap: 50px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .owner-card::before {
+            content: '';
+            position: absolute;
+            top: -30%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(249,115,22,0.08) 0%, transparent 70%);
+            border-radius: 50%;
+        }
+
+        .owner-image {
+            position: relative;
+            z-index: 1;
+        }
+
+        .owner-image img {
+            width: 100%;
+            border-radius: 40px;
+            border: 2px solid var(--primary);
+            filter: grayscale(20%);
+        }
+
+        .owner-badge {
+            position: absolute;
+            bottom: -15px;
+            right: -15px;
+            background: var(--primary);
+            color: var(--bg-dark);
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 14px;
+            box-shadow: 0 10px 20px rgba(249,115,22,0.3);
+        }
+
+        .owner-info h2 {
+            font-family: 'Clash Display', sans-serif;
+            font-size: 36px;
+            margin-bottom: 10px;
+        }
+
+        .owner-title {
+            color: var(--primary);
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 25px;
+            letter-spacing: 0.5px;
+        }
+
+        .owner-bio {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: 30px;
+        }
+
+        .owner-creds {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .cred-item {
+            background: var(--bg-card-light);
+            padding: 12px 18px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            font-size: 14px;
+        }
+
+        .cred-item i {
+            color: var(--primary);
+            margin-right: 8px;
+        }
+
+        /* Modal System - Confidential */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.98);
+            backdrop-filter: blur(30px);
+            -webkit-backdrop-filter: blur(30px);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        /* Step 1 - Email/Password */
+        .auth-modal {
+            background: var(--bg-card);
+            width: 450px;
+            border-radius: 50px;
+            padding: 50px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 40px 80px rgba(249,115,22,0.2);
+            position: relative;
+            animation: modalFade 0.5s ease;
+        }
+
+        @keyframes modalFade {
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .modal-header i {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .modal-header h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .modal-header p {
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 25px;
+        }
+
+        .input-group label {
+            display: block;
+            color: var(--text-secondary);
+            font-size: 12px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            letter-spacing: 0.5px;
+        }
+
+        .input-group input {
+            width: 100%;
+            background: var(--bg-card-light);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 16px 22px;
+            color: var(--text-primary);
+            font-size: 15px;
+            transition: 0.3s;
+        }
+
+        .input-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.2);
+        }
+
+        .modal-btn {
+            width: 100%;
+            background: var(--gradient-1);
+            border: none;
+            color: var(--bg-dark);
+            padding: 18px;
+            border-radius: 40px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+
+        .modal-btn:hover {
+            opacity: 0.9;
+            transform: scale(1.02);
+        }
+
+        .close-modal {
+            position: absolute;
+            top: 25px;
+            right: 25px;
+            background: transparent;
+            border: none;
+            color: var(--text-tertiary);
+            font-size: 24px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .close-modal:hover {
+            color: var(--primary);
+        }
+
+        /* Step 2 - PIN Modal (Password Style) */
+        .pin-modal {
+            background: var(--bg-card);
+            width: 450px;
+            border-radius: 50px;
+            padding: 50px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 40px 80px rgba(249,115,22,0.2);
+            animation: modalFade 0.5s ease;
+        }
+
+        .pin-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .pin-header i {
+            font-size: 48px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .pin-header h2 {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .pin-header p {
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+
+        .pin-field {
+            width: 100%;
+            background: var(--bg-card-light);
+            border: 1px solid var(--border);
+            border-radius: 30px;
+            padding: 18px 25px;
+            color: var(--text-primary);
+            font-size: 28px;
+            font-weight: 700;
+            letter-spacing: 8px;
+            text-align: center;
+            font-family: monospace;
+            transition: 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .pin-field:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(249,115,22,0.2);
+        }
+
+        .pin-field::placeholder {
+            color: var(--text-tertiary);
+            font-size: 14px;
+            letter-spacing: normal;
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 25px;
+        }
+
+        .back-link a {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .back-link a:hover {
+            color: var(--primary);
+        }
+
+        /* Step 3 - Confidential Vault Dashboard (Hidden until login) */
+        .vault-dashboard {
+            width: 95%;
+            max-width: 1300px;
+            height: 90vh;
+            background: var(--bg-card);
+            border-radius: 50px;
+            border: 1px solid var(--primary);
+            padding: 40px;
+            overflow-y: auto;
+            position: relative;
+            animation: dashboardFade 0.6s ease;
+        }
+
+        @keyframes dashboardFade {
+            from {
+                opacity: 0;
+                transform: scale(0.98);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .user-welcome h2 {
+            font-size: 24px;
+            margin-bottom: 8px;
+        }
+
+        .user-welcome p {
+            color: var(--primary);
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-indicator {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success);
+            color: var(--success);
+            padding: 10px 25px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .live-indicator i {
+            font-size: 8px;
+        }
+
+        .close-dashboard {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text-secondary);
+            padding: 12px 28px;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .close-dashboard:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        /* Confidential Asset Cards (Hidden until login) */
+        .assets-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .asset-card {
+            background: var(--bg-card-light);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 35px;
+            transition: 0.3s;
+        }
+
+        .asset-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-5px);
+        }
+
+        .asset-icon {
+            font-size: 40px;
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .asset-label {
+            color: var(--text-tertiary);
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 10px;
+        }
+
+        .asset-value {
+            font-size: 48px;
+            font-weight: 800;
+            margin-bottom: 8px;
+        }
+
+        .asset-detail {
+            color: var(--primary);
+            font-size: 14px;
+        }
+
+        .holdings-container {
+            background: var(--bg-card-light);
+            border: 1px solid var(--border);
+            border-radius: 40px;
+            padding: 40px;
+        }
+
+        .holdings-title {
+            font-size: 22px;
+            margin-bottom: 30px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .holdings-title i {
+            color: var(--primary);
+        }
+
+        .holdings-double {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .holding-category h4 {
+            color: var(--primary);
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .holding-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+
+        .holding-item span:first-child {
+            color: var(--text-secondary);
+        }
+
+        .holding-item span:last-child {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .vault-footer {
+            margin-top: 40px;
+            padding: 25px;
+            background: var(--bg-card);
+            border-radius: 30px;
+            display: flex;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .vault-footer-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--text-tertiary);
+            font-size: 13px;
+        }
+
+        .vault-footer-item i {
+            color: var(--primary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--bg-card);
+            padding: 60px 40px 30px;
+            border-top: 1px solid var(--border);
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 40px;
+        }
+
+        .footer-links a {
+            color: var(--text-tertiary);
+            text-decoration: none;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+
+        .copyright {
+            color: var(--text-tertiary);
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+    <div class="grid-background"></div>
+    <div class="noise"></div>
+
+    <!-- Navigation -->
+    <nav class="navbar" data-aos="fade-down">
+        <div class="logo">
+            <div class="logo-icon">
+                <i class="fas fa-vault"></i>
+            </div>
+            <div class="logo-text">
+                <h1>FAB GOLD STORAGE</h1>
+                <span>PRIVATE VAULT • EST 2000</span>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link">Institution</a>
+            <a href="#" class="nav-link">Governance</a>
+            <a href="#" class="nav-link">Contact</a>
+            <button class="nav-btn" onclick="openAuthModal()">
+                <i class="fas fa-lock"></i> CLIENT ACCESS
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section - No Asset Info Visible -->
+    <section class="hero">
+        <div class="hero-content" data-aos="fade-up">
+            <div class="confidential-badge">
+                <i class="fas fa-eye-slash"></i>
+                <span>CONFIDENTIAL • PRIVATE VAULT</span>
+                <i class="fas fa-eye-slash"></i>
+            </div>
+            
+            <h1>Swiss Private<br>Vaulting Since 2000</h1>
+            
+            <p>Institutional-grade asset storage with complete confidentiality. Access restricted to authorized clients only.</p>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <h3>24+</h3>
+                    <p>Years Service</p>
+                </div>
+                <div class="stat-item">
+                    <h3>Class 3</h3>
+                    <p>Vault Rating</p>
+                </div>
+                <div class="stat-item">
+                    <h3>100%</h3>
+                    <p>Confidential</p>
+                </div>
+            </div>
+
+            <button class="hero-btn" onclick="openAuthModal()">
+                <i class="fas fa-arrow-right"></i> ACCESS PRIVATE PORTAL
+            </button>
+
+            <div class="redacted-bar"></div>
+        </div>
+    </section>
+
+    <!-- Features - Generic Institutional -->
+    <section class="features">
+        <div class="section-header" data-aos="fade-up">
+            <h2>Institutional <span>Excellence</span></h2>
+            <p>The highest standards of security and confidentiality</p>
+        </div>
+
+        <div class="features-grid">
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="100">
+                <div class="feature-icon"><i class="fas fa-shield-halved"></i></div>
+                <h3>Military Grade</h3>
+                <p>Class 3 vault infrastructure with multi-layer security protocols</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="200">
+                <div class="feature-icon"><i class="fas fa-certificate"></i></div>
+                <h3>Fully Insured</h3>
+                <p>Comprehensive coverage through Lloyd's of London</p>
+            </div>
+            <div class="feature-card" data-aos="fade-up" data-aos-delay="300">
+                <div class="feature-icon"><i class="fas fa-clock"></i></div>
+                <h3>Since 2000</h3>
+                <p>24+ years of continuous custody operations</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Owner Profile - Professional -->
+    <section class="owner-section">
+        <div class="owner-card" data-aos="zoom-in">
+            <div class="owner-image">
+                <img src="profile.jpg" alt="Neil Stannard">
+                <div class="owner-badge">
+                    <i class="fas fa-crown"></i> FOUNDER
+                </div>
+            </div>
+            <div class="owner-info">
+                <h2>Neil Stannard</h2>
+                <div class="owner-title">Principal Founder • Vault Controller</div>
+                <p class="owner-bio">Third-generation metals and commodities specialist with over 28 years of institutional experience. Graduate Gemologist and LBMA accredited.</p>
+                <div class="owner-creds">
+                    <div class="cred-item"><i class="fas fa-user"></i> Male • British-Swiss</div>
+                    <div class="cred-item"><i class="fas fa-calendar"></i> 28+ Years Industry</div>
+                    <div class="cred-item"><i class="fas fa-gem"></i> GIA Graduate</div>
+                    <div class="cred-item"><i class="fas fa-coins"></i> LBMA Good Delivery</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- STEP 1: Email/Password Modal -->
+    <div class="modal-overlay" id="authModal">
+        <div class="auth-modal">
+            <button class="close-modal" onclick="closeAuthModal()"><i class="fas fa-times"></i></button>
+            <div class="modal-header">
+                <i class="fas fa-lock"></i>
+                <h2>Client Login</h2>
+                <p>Enter your secure credentials</p>
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-envelope"></i> REGISTERED EMAIL</label>
+                <input type="email" id="loginEmail" placeholder="client@example.com">
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-key"></i> PASSWORD</label>
+                <input type="password" id="loginPassword" placeholder="••••••••">
+            </div>
+            <button class="modal-btn" onclick="verifyCredentials()">
+                <i class="fas fa-arrow-right"></i> CONTINUE
+            </button>
+        </div>
+    </div>
+
+    <!-- STEP 2: PIN Modal (Password Style) -->
+    <div class="modal-overlay" id="pinModal">
+        <div class="pin-modal">
+            <button class="close-modal" onclick="closePinModal()"><i class="fas fa-times"></i></button>
+            <div class="pin-header">
+                <i class="fas fa-shield-halved"></i>
+                <h2>Verification Required</h2>
+                <p>Enter your 4-digit security PIN</p>
+            </div>
+            <div class="input-group">
+                <label><i class="fas fa-lock"></i> SECURITY PIN</label>
+                <input type="password" class="pin-field" id="pinInput" placeholder="••••" maxlength="4" inputmode="numeric" autocomplete="off">
+            </div>
+            <button class="modal-btn" onclick="verifyPIN()">
+                <i class="fas fa-unlock-alt"></i> VERIFY & ACCESS
+            </button>
+            <div class="back-link">
+                <a onclick="backToAuth()"><i class="fas fa-arrow-left"></i> Back to login</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- STEP 3: Confidential Vault Dashboard (Assets Hidden Until Login) -->
+    <div class="modal-overlay" id="vaultDashboard">
+        <div class="vault-dashboard">
+            <div class="dashboard-header">
+                <div class="user-welcome">
+                    <h2>Welcome, Dax Williams</h2>
+                    <p><i class="fas fa-circle" style="color: var(--success); font-size: 8px;"></i> Secure Session Active • Last Access: Today 14:32 UTC</p>
+                </div>
+                <div class="live-indicator">
+                    <i class="fas fa-circle"></i> LIVE CONNECTION
+                </div>
+                <button class="close-dashboard" onclick="closeVault()">
+                    <i class="fas fa-power-off"></i> LOCK
+                </button>
+            </div>
+
+            <!-- Confidential Asset Information (Only visible after login) -->
+            <div class="assets-grid">
+                <div class="asset-card">
+                    <div class="asset-icon"><i class="fas fa-coins"></i></div>
+                    <div class="asset-label">GOLD STORED</div>
+                    <div class="asset-value">72 kg</div>
+                    <div class="asset-detail">.9999 fine • LBMA certified</div>
+                </div>
+                <div class="asset-card">
+                    <div class="asset-icon"><i class="fas fa-gem"></i></div>
+                    <div class="asset-label">DIAMOND HOLDINGS</div>
+                    <div class="asset-value">220 ct</div>
+                    <div class="asset-detail">GIA certified • Investment grade</div>
+                </div>
+                <div class="asset-card">
+                    <div class="asset-icon"><i class="fas fa-calendar-check"></i></div>
+                    <div class="asset-label">SINCE</div>
+                    <div class="asset-value">08 MAR</div>
+                    <div class="asset-detail">2000 • 24+ years</div>
+                </div>
+            </div>
+
+            <!-- Detailed Holdings -->
+            <div class="holdings-container">
+                <div class="holdings-title">
+                    <i class="fas fa-clipboard-list"></i> Detailed Asset Breakdown
+                </div>
+                <div class="holdings-double">
+                    <div class="holding-category">
+                        <h4><i class="fas fa-coins"></i> Gold Inventory</h4>
+                        <div class="holding-item"><span>400 oz gold bars (LBMA)</span> <span>5 bars</span></div>
+                        <div class="holding-item"><span>1 kg cast bars (Credit Suisse)</span> <span>32 bars</span></div>
+                        <div class="holding-item"><span>Gold granules 999.9</span> <span>15.2 kg</span></div>
+                        <div class="holding-item"><span>Canadian Maple Leafs</span> <span>120 oz</span></div>
+                    </div>
+                    <div class="holding-category">
+                        <h4><i class="fas fa-gem"></i> Diamond Inventory</h4>
+                        <div class="holding-item"><span>D-Flawless rounds</span> <span>34 ct</span></div>
+                        <div class="holding-item"><span>Fancy pink diamonds</span> <span>86 ct</span></div>
+                        <div class="holding-item"><span>Brilliant cut collection</span> <span>100 ct</span></div>
+                        <div class="holding-item"><span>Rough diamonds</span> <span>45 ct</span></div>
+                    </div>
+                </div>
+                <div class="vault-footer">
+                    <div class="vault-footer-item"><i class="fas fa-certificate"></i> Chain of custody: 12 verifications</div>
+                    <div class="vault-footer-item"><i class="fas fa-fingerprint"></i> Vault ID: FAB-8843-032000</div>
+                    <div class="vault-footer-item"><i class="fas fa-stamp"></i> Last audit: March 8, 2025</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="copyright">
+                © 2015 FAB GOLD STORAGE LIMITED • ALL RIGHTS RESERVED
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy</a>
+                <a href="#">Terms</a>
+                <a href="#">Compliance</a>
+                <a href="#"><i class="fas fa-phone"></i> +41 22 555 0123</a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Initialize AOS
+        AOS.init({
+            once: true,
+            duration: 1000,
+        });
+
+        // Modal Controls
+        function openAuthModal() {
+            document.getElementById('authModal').classList.add('active');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.remove('active');
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+
+        function closePinModal() {
+            document.getElementById('pinModal').classList.remove('active');
+            document.getElementById('pinInput').value = '';
+        }
+
+        function backToAuth() {
+            document.getElementById('pinModal').classList.remove('active');
+            document.getElementById('authModal').classList.add('active');
+            document.getElementById('pinInput').value = '';
+        }
+
+        function closeVault() {
+            document.getElementById('vaultDashboard').classList.remove('active');
+        }
+
+        // Step 1: Verify Email/Password
+        function verifyCredentials() {
+            const email = document.getElementById('loginEmail').value;
+            const password = document.getElementById('loginPassword').value;
+
+            if (email === 'daxwilliams33@gmail.com' && password === 'Trust4344') {
+                document.getElementById('authModal').classList.remove('active');
+                document.getElementById('pinModal').classList.add('active');
+                setTimeout(() => document.getElementById('pinInput').focus(), 300);
+            } else {
+                alert('Access Denied. Please check your credentials.');
+            }
+        }
+
+        // Step 2: Verify PIN (Password Style)
+        function verifyPIN() {
+            const pin = document.getElementById('pinInput').value;
+
+            if (pin === '2240') {
+                document.getElementById('pinModal').classList.remove('active');
+                document.getElementById('vaultDashboard').classList.add('active');
+            } else {
+                alert('Invalid PIN. Please try again.');
+                document.getElementById('pinInput').value = '';
+                document.getElementById('pinInput').focus();
+            }
+        }
+
+        // Restrict PIN to numbers only
+        document.getElementById('pinInput')?.addEventListener('input', function(e) {
+            this.value = this.value.replace(/[^0-9]/g, '').slice(0, 4);
+        });
+
+        // Enter key for PIN
+        document.getElementById('pinInput')?.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyPIN();
+            }
+        });
+
+        // Escape key handling
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                if (document.getElementById('vaultDashboard').classList.contains('active')) {
+                    closeVault();
+                } else if (document.getElementById('pinModal').classList.contains('active')) {
+                    closePinModal();
+                } else if (document.getElementById('authModal').classList.contains('active')) {
+                    closeAuthModal();
+                }
+            }
+        });
+    </script>
+</body>
+</html>
